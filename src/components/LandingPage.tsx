@@ -339,7 +339,7 @@ export default function LandingPage() {
           <div className="absolute bottom-[-10%] left-[15%] w-[50vw] h-[50vw] rounded-full bg-text-primary/5 blur-[160px] pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="flex flex-col items-center text-center">
+            <div className="flex flex-col items-center text-center gap-8 md:gap-12">
               
               {/* Badge */}
               <div className="hero-animate inline-flex items-center gap-3 px-1 py-1 pr-4 rounded-full bg-surface-glass border border-accent-slate/20 text-text-body text-xs md:text-sm font-medium mb-10 shadow-[0_4px_30px_rgba(34,50,75,0.03)] backdrop-blur-md">
@@ -365,7 +365,7 @@ export default function LandingPage() {
                 } as React.CSSProperties}
               >
                 <h1
-                  className="text-5xl md:text-6xl lg:text-[5.5rem] font-light tracking-tight leading-[1.2] max-w-5xl flex flex-col items-center gap-2 md:gap-4"
+                  className="text-5xl md:text-6xl lg:text-[6rem] xl:text-[7rem] font-light tracking-tight leading-[1.15] max-w-6xl flex flex-col items-center gap-3 md:gap-6"
                   style={{
                     background: `
                       radial-gradient(circle 220px at var(--x1) var(--y1), #50D995 0%, transparent 100%),
@@ -392,12 +392,12 @@ export default function LandingPage() {
               </div>
 
               {/* Description */}
-              <p className="hero-animate mt-8 text-base md:text-lg font-normal leading-relaxed text-text-body max-w-2xl">
+              <p className="hero-animate text-base md:text-xl font-normal leading-relaxed text-text-body max-w-3xl">
                 Vous êtes à un clic de transformer votre situation. Vérifiez gratuitement en 2 minutes si votre dossier présente un levier d'action grâce à notre analyse intelligente.
               </p>
 
               {/* Buttons */}
-              <div className="hero-animate mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="hero-animate mt-4 flex flex-col sm:flex-row items-center justify-center gap-5">
                 <button
                   onClick={() => setPhase("form")}
                   className="px-8 py-4 rounded-full bg-accent-green text-text-primary font-bold shadow-lg shadow-accent-green/20 transition-all duration-300 hover:bg-accent-greenStrong hover:scale-105 hover:-translate-y-0.5"
