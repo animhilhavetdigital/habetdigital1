@@ -247,10 +247,23 @@ export default function LandingPage() {
   useGSAP(() => {
     if (phase === "hero") {
       const ctx = gsap.context(() => {
-        gsap.from(".hero-animate", {
-          opacity: 0, y: 20, duration: 0.9,
-          ease: "cubic-bezier(0.16, 1, 0.3, 1)", stagger: 0.1,
+        const tl = gsap.timeline();
+        // Split text reveal - each word slides up
+        tl.from(".word", {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.08,
         });
+        // Badge, description, buttons fade in after title
+        tl.from(".hero-animate", {
+          opacity: 0,
+          y: 20,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.1,
+        }, "-=0.4");
       }, sectionRef);
       return () => ctx.revert();
     }
@@ -329,7 +342,7 @@ export default function LandingPage() {
   if (phase === "hero") {
     return (
       <>
-        <section ref={sectionRef} className="relative pt-36 pb-16 md:pt-48 md:pb-24 overflow-hidden bg-background-main z-0">
+        <section ref={sectionRef} className="relative min-h-[100dvh] flex flex-col items-center justify-center pt-24 overflow-hidden bg-background-main z-0">
           {/* Background Mesh Gradient Blobs (from SKILL.md) */}
           <div className="absolute top-[-15%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-accent-green/12 blur-[130px] pointer-events-none" />
           <div className="absolute top-[30%] right-[-15%] w-[40vw] h-[40vw] rounded-full bg-accent-slate/20 blur-[120px] pointer-events-none" />
@@ -350,7 +363,7 @@ export default function LandingPage() {
               {/* Headline with liquid gradient text effect */}
               <div
                 ref={titleRef}
-                className="hero-animate relative inline-block"
+                className="relative inline-block"
                 onMouseMove={handleTitleMouseMove}
                 style={{
                   '--x1': '0px',
@@ -377,13 +390,13 @@ export default function LandingPage() {
                   }}
                 >
                   <span className="flex flex-wrap justify-center items-center gap-x-3 md:gap-x-4">
-                    Votre
-                    <span className="font-bold">crédit</span>
-                    <span>conso</span>
+                    <span className="word inline-block">Votre</span>
+                    <span className="word inline-block font-bold">crédit</span>
+                    <span className="word inline-block">conso</span>
                   </span>
                   <span className="flex flex-wrap justify-center items-center gap-x-3 md:gap-x-4">
-                    vous
-                    <span className="font-bold">pèse ?</span>
+                    <span className="word inline-block">vous</span>
+                    <span className="word inline-block font-bold">pèse ?</span>
                   </span>
                 </h1>
               </div>
