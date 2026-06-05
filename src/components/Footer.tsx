@@ -1,16 +1,39 @@
 "use client";
 
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Footer() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    gsap.from(".footer-reveal", {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 85%",
+        toggleActions: "play none none none",
+      },
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      ease: "power3.out",
+      stagger: 0.08,
+    });
+  }, { scope: sectionRef });
+
   return (
-    <footer className="border-t border-accent-slate/15 bg-background-muted">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+    <footer ref={sectionRef} className="border-t border-accent-slate/15 bg-background-muted">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
           
           {/* Colonne 1 : Logo + Tagline */}
-          <div>
+          <div className="footer-reveal">
             <Link href="/" className="inline-flex items-center gap-2 mb-6">
               <Image
                 src="/107240.png"
@@ -26,7 +49,7 @@ export default function Footer() {
           </div>
 
           {/* Colonne 2 : Liens */}
-          <div>
+          <div className="footer-reveal">
             <h4 className="text-sm font-semibold text-text-primary mb-4">Liens utiles</h4>
             <ul className="space-y-3">
               <li>
@@ -53,7 +76,7 @@ export default function Footer() {
           </div>
 
           {/* Colonne 3 : Coordonnées */}
-          <div>
+          <div className="footer-reveal">
             <h4 className="text-sm font-semibold text-text-primary mb-4">Nous contacter</h4>
             <ul className="space-y-3">
               <li>
@@ -72,7 +95,7 @@ export default function Footer() {
           </div>
 
           {/* Colonne 4 : Réseaux sociaux */}
-          <div>
+          <div className="footer-reveal">
             <h4 className="text-sm font-semibold text-text-primary mb-4">Suivez-nous</h4>
             <div className="flex items-center gap-4">
               <a href="#" className="w-10 h-10 rounded-full bg-background-main border border-accent-slate/20 flex items-center justify-center text-text-light hover:text-accent-green hover:border-accent-green transition-all duration-300">
@@ -89,7 +112,7 @@ export default function Footer() {
 
         </div>
 
-        <div className="mt-16 pt-8 border-t border-accent-slate/15 text-center">
+        <div className="footer-reveal mt-12 pt-8 border-t border-accent-slate/15 text-center">
           <p className="text-sm text-text-light">
             © {new Date().getFullYear()} DroitHabitat. Tous droits réservés.
           </p>

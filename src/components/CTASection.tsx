@@ -33,7 +33,7 @@ export default function CTASection() {
     <section
       id="contact"
       ref={sectionRef}
-      className="py-24 md:py-32"
+      className="py-16 md:py-24"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="cta-animate relative overflow-hidden rounded-[2.5rem] bg-surface-dark px-6 py-16 md:px-16 md:py-24 text-center">

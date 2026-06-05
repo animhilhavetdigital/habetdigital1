@@ -3,6 +3,9 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
@@ -70,11 +73,24 @@ export default function TestimonialsSection() {
     });
 
     // Column 2 moving DOWN
-    // Start at -50% and move to 0
     gsap.fromTo(column2Ref.current, 
       { yPercent: -50 },
       { yPercent: 0, ease: "none", duration: 40, repeat: -1 }
     );
+
+    // Scroll reveal animation
+    gsap.from(".testimonial-reveal", {
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      ease: "power3.out",
+      stagger: 0.1,
+    });
   }, { scope: containerRef });
 
   // Separate array into two lanes
@@ -86,7 +102,7 @@ export default function TestimonialsSection() {
   const col2Items = [...lane2, ...lane2];
 
   return (
-    <section ref={containerRef} className="py-24 md:py-32 bg-background-main relative overflow-hidden">
+    <section ref={containerRef} className="py-16 md:py-24 bg-background-main relative overflow-hidden">
       {/* Background Soft Gradients (SKILL.md style) */}
       <div className="absolute top-[10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-accent-green/5 blur-[150px] pointer-events-none" />
       <div className="absolute bottom-[-10%] left-[20%] w-[40vw] h-[40vw] rounded-full bg-text-primary/5 blur-[130px] pointer-events-none" />
@@ -96,15 +112,15 @@ export default function TestimonialsSection() {
           
           {/* Left Column */}
           <div className="lg:col-span-5 relative flex flex-col">
-            <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-bold tracking-tight text-text-primary leading-[1.1] mb-6">
+            <h2 className="testimonial-reveal text-4xl md:text-5xl lg:text-[4rem] font-bold tracking-tight text-text-primary leading-[1.1] mb-6">
               Ce Que Disent<br/><span className="text-text-body font-light">Nos Clients</span>
             </h2>
-            <p className="text-base md:text-lg text-text-body leading-relaxed mb-10 max-w-sm">
+            <p className="testimonial-reveal text-base md:text-lg text-text-body leading-relaxed mb-10 max-w-sm">
               Découvrez comment nos clients transforment leur croissance grâce à des solutions avancées. Voici exactement comment ils y sont parvenus.
             </p>
             
             {/* Video Card Container */}
-            <div className="relative w-full aspect-[3/4] max-w-md rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(34,50,75,0.1)] group cursor-pointer border border-accent-slate/10">
+            <div className="testimonial-reveal relative w-full aspect-[3/4] max-w-md rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(34,50,75,0.1)] group cursor-pointer border border-accent-slate/10">
               {/* Image background */}
               <div className="absolute inset-0 bg-surface-dark">
                  <img src="https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=800" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105" alt="David Pierce Video" />
@@ -140,7 +156,7 @@ export default function TestimonialsSection() {
           </div>
 
           {/* Right Grid (Infinite Vertical Marquee) */}
-          <div className="lg:col-span-7 relative h-[600px] lg:h-auto">
+          <div className="testimonial-reveal lg:col-span-7 relative h-[600px] lg:h-auto">
             <div className="absolute inset-0 overflow-hidden -mx-4 px-4 sm:mx-0 sm:px-0">
 
               <div className="flex gap-6 w-full h-fit">

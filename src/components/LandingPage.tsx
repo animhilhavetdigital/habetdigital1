@@ -105,7 +105,7 @@ function HowItWorks() {
   }, { scope: ref });
 
   return (
-    <div ref={ref} className="py-24 md:py-32 relative overflow-hidden bg-background-main">
+    <div ref={ref} className="py-16 md:py-24 relative overflow-hidden bg-background-main">
       {/* Background Gradient & Glowing Orbs */}
       <div className="absolute inset-0 bg-gradient-to-b from-background-main via-accent-green/5 to-background-muted z-0"></div>
       <div className="absolute top-[30%] left-[20%] w-[40vw] h-[40vw] rounded-full bg-accent-green/10 blur-[120px] pointer-events-none" />
@@ -329,7 +329,7 @@ export default function LandingPage() {
   if (phase === "hero") {
     return (
       <>
-        <section ref={sectionRef} className="relative pt-36 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-background-main z-0">
+        <section ref={sectionRef} className="relative pt-36 pb-16 md:pt-48 md:pb-24 overflow-hidden bg-background-main z-0">
           {/* Background Mesh Gradient Blobs (from SKILL.md) */}
           <div className="absolute top-[-15%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-accent-green/12 blur-[130px] pointer-events-none" />
           <div className="absolute top-[30%] right-[-15%] w-[40vw] h-[40vw] rounded-full bg-accent-slate/20 blur-[120px] pointer-events-none" />
