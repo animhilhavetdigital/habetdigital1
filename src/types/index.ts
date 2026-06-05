@@ -1,3 +1,5 @@
+export type Database = any;
+
 export type UserRole = "super_admin" | "client" | "negotiator";
 
 export type DossierStatus =
