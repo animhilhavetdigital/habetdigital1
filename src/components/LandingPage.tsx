@@ -112,8 +112,8 @@ function HowItWorks() {
       <div className="absolute bottom-[10%] right-[20%] w-[35vw] h-[35vw] rounded-full bg-text-primary/10 blur-[140px] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <span className="hiw-animate inline-block px-4 py-1.5 rounded-full bg-white shadow-sm border border-accent-green/20 text-accent-greenStrong text-sm font-bold mb-4">
+        <div className="text-center mb-10">
+          <span className="hiw-animate inline-block px-4 py-1.5 rounded-full bg-white shadow-sm border border-accent-green/20 text-accent-greenStrong text-sm font-bold mb-3">
             Processus
           </span>
           <h2 className="hiw-animate text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-text-primary">
@@ -122,31 +122,31 @@ function HowItWorks() {
         </div>
 
         {/* 2x2 Symmetric Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           
           {/* Step 1 */}
-          <div className="bento-card group flex flex-col items-center text-center p-8 md:p-10 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
-            <div className="relative w-32 h-32 mb-8 flex items-center justify-center">
+          <div className="bento-card group flex flex-col items-center text-center p-5 md:p-7 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
+            <div className="relative w-24 h-24 mb-5 flex items-center justify-center">
               {/* Animated Radar/Scanner */}
               <div className="absolute inset-0 bg-accent-green/10 rounded-full animate-pulse"></div>
               <div className="absolute inset-4 border-2 border-accent-green/30 rounded-full"></div>
               <svg className="absolute inset-0 w-full h-full text-accent-green animate-[spin_4s_linear_infinite]" viewBox="0 0 100 100">
                 <path d="M50 50 L50 10 A40 40 0 0 1 90 50 Z" fill="currentColor" opacity="0.2" />
               </svg>
-              <div className="relative z-10 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10">
+              <div className="relative z-10 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10">
                 <span className="text-xl font-bold text-accent-greenStrong">1</span>
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-text-primary mb-3">Test (2 min)</h3>
-            <p className="text-base text-text-body leading-relaxed max-w-xs">
+            <h3 className="text-xl font-bold text-text-primary mb-2">Test (2 min)</h3>
+            <p className="text-sm text-text-body leading-relaxed max-w-xs">
               Vérifiez votre éligibilité en ligne instantanément grâce à notre formulaire intelligent d'analyse.
             </p>
           </div>
 
           {/* Step 2 (Locked) */}
-          <div className="bento-card group flex flex-col items-center text-center p-8 md:p-10 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
+          <div className="bento-card group flex flex-col items-center text-center p-5 md:p-7 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
             
-            <div className="relative w-full max-w-[220px] h-36 mb-8">
+            <div className="relative w-full max-w-[160px] h-28 mb-5">
               {/* Inner blurred container representing the hidden offer */}
               <div className="absolute inset-0 rounded-2xl overflow-hidden border border-accent-slate/20 bg-background-muted shadow-inner">
                 {/* Fake Content Behind Blur */}
@@ -159,7 +159,7 @@ function HowItWorks() {
                 
                 {/* The Lock Overlay */}
                 <div className="absolute inset-0 bg-white/60 backdrop-blur-md z-20 flex flex-col items-center justify-center transition-all duration-500 group-hover:bg-white/50">
-                  <div className="w-14 h-14 rounded-xl bg-white shadow-md flex items-center justify-center mb-3 border border-accent-slate/10 transition-transform duration-500 group-hover:scale-110">
+                  <div className="w-11 h-11 rounded-xl bg-white shadow-md flex items-center justify-center mb-2 border border-accent-slate/10 transition-transform duration-500 group-hover:scale-110">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-primary"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                   </div>
                   <span className="text-xs font-bold text-text-primary px-4 py-1.5 rounded-full bg-white shadow-sm border border-accent-slate/10">
@@ -169,53 +169,53 @@ function HowItWorks() {
               </div>
 
               {/* Number 2 Badge (Outside overflow) */}
-              <div className="absolute -bottom-4 -right-2 z-30 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10 transition-transform duration-500 group-hover:-translate-y-1">
+              <div className="absolute -bottom-4 -right-2 z-30 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10 transition-transform duration-500 group-hover:-translate-y-1">
                 <span className="text-xl font-bold text-accent-greenStrong">2</span>
               </div>
             </div>
 
-            <h3 className="text-2xl font-bold text-text-primary mb-3">Offre personnalisée</h3>
-            <p className="text-base text-text-body leading-relaxed max-w-xs">
+            <h3 className="text-xl font-bold text-text-primary mb-2">Offre personnalisée</h3>
+            <p className="text-sm text-text-body leading-relaxed max-w-xs">
               Découvrez nos solutions juridiques adaptées à votre dossier spécifique et le montant récupérable.
             </p>
           </div>
 
           {/* Step 3 */}
-          <div className="bento-card group flex flex-col items-center text-center p-8 md:p-10 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
-            <div className="relative w-32 h-32 mb-8 flex items-center justify-center">
+          <div className="bento-card group flex flex-col items-center text-center p-5 md:p-7 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
+            <div className="relative w-24 h-24 mb-5 flex items-center justify-center">
               <div className="absolute inset-0 bg-accent-slate/10 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
               <svg className="absolute inset-0 w-full h-full text-accent-green -rotate-90" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="251" strokeDashoffset="251" className="animate-[dash_3s_ease-in-out_infinite_alternate]" />
               </svg>
-              <div className="relative z-10 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10">
+              <div className="relative z-10 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10">
                 <span className="text-xl font-bold text-accent-greenStrong">3</span>
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-text-primary mb-3">Paiement sécurisé</h3>
-            <p className="text-base text-text-body leading-relaxed max-w-xs">
+            <h3 className="text-xl font-bold text-text-primary mb-2">Paiement sécurisé</h3>
+            <p className="text-sm text-text-body leading-relaxed max-w-xs">
               Réglez en toute sérénité. Nous ne facturons que si votre dossier a de fortes chances de succès.
             </p>
           </div>
 
           {/* Step 4 */}
-          <div className="bento-card group flex flex-col items-center text-center p-8 md:p-10 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
-            <div className="relative w-32 h-32 mb-8 flex items-center justify-center">
+          <div className="bento-card group flex flex-col items-center text-center p-5 md:p-7 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
+            <div className="relative w-24 h-24 mb-5 flex items-center justify-center">
               {/* Animated Floating File */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-20 bg-white border border-accent-slate/20 rounded-xl shadow-lg group-hover:-translate-y-4 transition-transform duration-500 flex flex-col p-3 gap-2">
+                <div className="w-12 h-16 bg-white border border-accent-slate/20 rounded-xl shadow-lg group-hover:-translate-y-4 transition-transform duration-500 flex flex-col p-2 gap-1.5">
                   <div className="w-full h-2 bg-accent-green/20 rounded-full"></div>
                   <div className="w-3/4 h-2 bg-accent-green/20 rounded-full"></div>
-                  <div className="mt-auto self-end w-5 h-5 rounded-full bg-accent-green flex items-center justify-center text-white">
+                  <div className="mt-auto self-end w-4 h-4 rounded-full bg-accent-green flex items-center justify-center text-white">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </div>
                 </div>
               </div>
-              <div className="absolute -bottom-2 -right-2 z-10 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10">
+              <div className="absolute -bottom-2 -right-2 z-10 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10">
                 <span className="text-xl font-bold text-accent-greenStrong">4</span>
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-text-primary mb-3">Dossier activé</h3>
-            <p className="text-base text-text-body leading-relaxed max-w-xs">
+            <h3 className="text-xl font-bold text-text-primary mb-2">Dossier activé</h3>
+            <p className="text-sm text-text-body leading-relaxed max-w-xs">
               Nous prenons le relais immédiatement. Suivez l'avancée de votre litige depuis votre espace client.
             </p>
           </div>
