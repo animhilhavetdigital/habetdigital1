@@ -45,16 +45,16 @@ export default function OffresPage() {
 
   useGSAP(() => {
     gsap.from(".offre-animate", {
-      scrollTrigger: { 
-        trigger: ref.current, 
-        start: "top 80%", 
-        toggleActions: "play none none none" 
+      scrollTrigger: {
+        trigger: ref.current,
+        start: "top 80%",
+        toggleActions: "play none none none"
       },
-      opacity: 0, 
-      scale: 0.95, 
-      y: 30, 
-      duration: 0.8, 
-      ease: "power2.out", 
+      opacity: 0,
+      scale: 0.95,
+      y: 30,
+      duration: 0.8,
+      ease: "power2.out",
       stagger: 0.15,
       clearProps: "all"
     });

@@ -5,6 +5,8 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
+import ProcessusDarkSection from "./ProcessusDarkSection";
+import SolutionSection from "./SolutionSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -91,146 +93,6 @@ function computeScore(data: Record<string, string>): number {
 
 /* ──────────────── COMPONENTS ──────────────── */
 
-function HowItWorks() {
-  const ref = useRef<HTMLDivElement>(null);
-  useGSAP(() => {
-    gsap.from(".bento-card", {
-      scrollTrigger: { trigger: ref.current, start: "top 80%", toggleActions: "play none none none" },
-      opacity: 0, y: 50, scale: 0.95, duration: 0.8, ease: "power3.out", stagger: 0.1, clearProps: "all"
-    });
-    gsap.from(".hiw-animate", {
-      scrollTrigger: { trigger: ref.current, start: "top 80%", toggleActions: "play none none none" },
-      opacity: 0, y: 20, duration: 0.6, stagger: 0.1, clearProps: "all"
-    });
-  }, { scope: ref });
-
-  return (
-    <div ref={ref} className="py-16 md:py-24 relative overflow-hidden bg-background-main">
-      {/* Background Gradient & Glowing Orbs */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background-main via-accent-green/5 to-background-muted z-0"></div>
-      <div className="absolute top-[30%] left-[20%] w-[40vw] h-[40vw] rounded-full bg-accent-green/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[10%] right-[20%] w-[35vw] h-[35vw] rounded-full bg-text-primary/10 blur-[140px] pointer-events-none" />
-
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-10">
-          <span className="hiw-animate inline-block px-4 py-1.5 rounded-full bg-white shadow-sm border border-accent-green/20 text-accent-greenStrong text-sm font-bold mb-3">
-            Processus
-          </span>
-          <h2 className="hiw-animate text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-text-primary">
-            Comment ça marche ?
-          </h2>
-        </div>
-
-        {/* 2x2 Symmetric Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          
-          {/* Step 1 */}
-          <div className="bento-card group flex flex-col items-center text-center p-5 md:p-7 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
-            <div className="relative w-24 h-24 mb-5 flex items-center justify-center">
-              {/* Animated Radar/Scanner */}
-              <div className="absolute inset-0 bg-accent-green/10 rounded-full animate-pulse"></div>
-              <div className="absolute inset-4 border-2 border-accent-green/30 rounded-full"></div>
-              <svg className="absolute inset-0 w-full h-full text-accent-green animate-[spin_4s_linear_infinite]" viewBox="0 0 100 100">
-                <path d="M50 50 L50 10 A40 40 0 0 1 90 50 Z" fill="currentColor" opacity="0.2" />
-              </svg>
-              <div className="relative z-10 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10">
-                <span className="text-xl font-bold text-accent-greenStrong">1</span>
-              </div>
-            </div>
-            <h3 className="text-xl font-bold text-text-primary mb-2">Test (2 min)</h3>
-            <p className="text-sm text-text-body leading-relaxed max-w-xs">
-              Vérifiez votre éligibilité en ligne instantanément grâce à notre formulaire intelligent d'analyse.
-            </p>
-          </div>
-
-          {/* Step 2 (Locked) */}
-          <div className="bento-card group flex flex-col items-center text-center p-5 md:p-7 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
-            
-            <div className="relative w-full max-w-[160px] h-28 mb-5">
-              {/* Inner blurred container representing the hidden offer */}
-              <div className="absolute inset-0 rounded-2xl overflow-hidden border border-accent-slate/20 bg-background-muted shadow-inner">
-                {/* Fake Content Behind Blur */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-4 opacity-40">
-                   <div className="h-3 w-1/2 bg-accent-slate rounded-full mb-3"></div>
-                   <div className="text-3xl font-black text-text-primary blur-[2px]">Prix Fixe</div>
-                   <div className="h-2 w-3/4 bg-accent-slate rounded-full mt-4"></div>
-                   <div className="h-2 w-2/3 bg-accent-slate rounded-full mt-2"></div>
-                </div>
-                
-                {/* The Lock Overlay */}
-                <div className="absolute inset-0 bg-white/60 backdrop-blur-md z-20 flex flex-col items-center justify-center transition-all duration-500 group-hover:bg-white/50">
-                  <div className="w-11 h-11 rounded-xl bg-white shadow-md flex items-center justify-center mb-2 border border-accent-slate/10 transition-transform duration-500 group-hover:scale-110">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-primary"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  </div>
-                  <span className="text-xs font-bold text-text-primary px-4 py-1.5 rounded-full bg-white shadow-sm border border-accent-slate/10">
-                    À débloquer
-                  </span>
-                </div>
-              </div>
-
-              {/* Number 2 Badge (Outside overflow) */}
-              <div className="absolute -bottom-4 -right-2 z-30 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10 transition-transform duration-500 group-hover:-translate-y-1">
-                <span className="text-xl font-bold text-accent-greenStrong">2</span>
-              </div>
-            </div>
-
-            <h3 className="text-xl font-bold text-text-primary mb-2">Offre personnalisée</h3>
-            <p className="text-sm text-text-body leading-relaxed max-w-xs">
-              Découvrez nos solutions juridiques adaptées à votre dossier spécifique et le montant récupérable.
-            </p>
-          </div>
-
-          {/* Step 3 */}
-          <div className="bento-card group flex flex-col items-center text-center p-5 md:p-7 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
-            <div className="relative w-24 h-24 mb-5 flex items-center justify-center">
-              <div className="absolute inset-0 bg-accent-slate/10 rounded-full group-hover:scale-110 transition-transform duration-500"></div>
-              <svg className="absolute inset-0 w-full h-full text-accent-green -rotate-90" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="251" strokeDashoffset="251" className="animate-[dash_3s_ease-in-out_infinite_alternate]" />
-              </svg>
-              <div className="relative z-10 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10">
-                <span className="text-xl font-bold text-accent-greenStrong">3</span>
-              </div>
-            </div>
-            <h3 className="text-xl font-bold text-text-primary mb-2">Paiement sécurisé</h3>
-            <p className="text-sm text-text-body leading-relaxed max-w-xs">
-              Réglez en toute sérénité. Nous ne facturons que si votre dossier a de fortes chances de succès.
-            </p>
-          </div>
-
-          {/* Step 4 */}
-          <div className="bento-card group flex flex-col items-center text-center p-5 md:p-7 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(34,50,75,0.08)]">
-            <div className="relative w-24 h-24 mb-5 flex items-center justify-center">
-              {/* Animated Floating File */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-12 h-16 bg-white border border-accent-slate/20 rounded-xl shadow-lg group-hover:-translate-y-4 transition-transform duration-500 flex flex-col p-2 gap-1.5">
-                  <div className="w-full h-2 bg-accent-green/20 rounded-full"></div>
-                  <div className="w-3/4 h-2 bg-accent-green/20 rounded-full"></div>
-                  <div className="mt-auto self-end w-4 h-4 rounded-full bg-accent-green flex items-center justify-center text-white">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  </div>
-                </div>
-              </div>
-              <div className="absolute -bottom-2 -right-2 z-10 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md border border-accent-slate/10">
-                <span className="text-xl font-bold text-accent-greenStrong">4</span>
-              </div>
-            </div>
-            <h3 className="text-xl font-bold text-text-primary mb-2">Dossier activé</h3>
-            <p className="text-sm text-text-body leading-relaxed max-w-xs">
-              Nous prenons le relais immédiatement. Suivez l'avancée de votre litige depuis votre espace client.
-            </p>
-          </div>
-
-        </div>
-      </div>
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes dash {
-          to { stroke-dashoffset: 0; }
-        }
-      `}} />
-    </div>
-  );
-}
-
 /* ──────────────── MAIN ──────────────── */
 
 export default function LandingPage() {
@@ -240,6 +102,7 @@ export default function LandingPage() {
   const [score, setScore] = useState(0);
   const [result, setResult] = useState<"éligible" | "not-éligible">("éligible");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showGradient, setShowGradient] = useState(false);
 
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
@@ -247,13 +110,35 @@ export default function LandingPage() {
   useGSAP(() => {
     if (phase === "hero") {
       const ctx = gsap.context(() => {
-        gsap.from(".hero-animate", {
+        const tl = gsap.timeline();
+
+        // Tswira tdkhol men limen
+        tl.from(".hero-bg", {
+          x: 60,
           opacity: 0,
-          y: 30,
-          duration: 0.9,
+          scale: 1.05,
+          duration: 1.2,
           ease: "power3.out",
-          stagger: 0.12,
         });
+
+        // Typewriter : 7arf b 7arf
+        tl.to(".hero-letter", {
+          opacity: 1,
+          duration: 0.04,
+          stagger: 0.04,
+          ease: "none",
+        }, "-=0.3");
+
+        // Activer liquid gradient mora typewriter
+        tl.call(() => setShowGradient(true));
+
+        // Description
+        tl.from(".hero-desc", {
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          ease: "power3.out",
+        }, "+=0.3");
       }, sectionRef);
       return () => ctx.revert();
     }
@@ -332,88 +217,69 @@ export default function LandingPage() {
   if (phase === "hero") {
     return (
       <>
-        <section ref={sectionRef} className="relative min-h-[100dvh] flex flex-col items-center justify-center pt-24 overflow-hidden bg-background-main z-0">
-          {/* Background Mesh Gradient Blobs (from SKILL.md) */}
-          <div className="absolute top-[-15%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-accent-green/12 blur-[130px] pointer-events-none" />
-          <div className="absolute top-[30%] right-[-15%] w-[40vw] h-[40vw] rounded-full bg-accent-slate/20 blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-[-10%] left-[15%] w-[50vw] h-[50vw] rounded-full bg-text-primary/5 blur-[160px] pointer-events-none" />
+        <section ref={sectionRef} className="relative min-h-[100dvh] flex items-center overflow-hidden z-0">
+          {/* Background Image */}
+          <div className="hero-bg absolute inset-0">
+            <img
+              src="/photo/A_professional_cinematic_medium_shot_202606080846.jpeg"
+              alt="Droit Habitat"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#22324B]/75 via-[#22324B]/60 to-[#22324B]/20" />
+          </div>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="flex flex-col items-center text-center gap-8 md:gap-12">
-              
-              {/* Badge */}
-              <div className="hero-animate inline-flex items-center gap-3 px-1 py-1 pr-4 rounded-full bg-surface-glass border border-accent-slate/20 text-text-body text-xs md:text-sm font-medium mb-10 shadow-[0_4px_30px_rgba(34,50,75,0.03)] backdrop-blur-md">
-                <span className="flex items-center justify-center px-3 py-1 rounded-full bg-accent-green/15 text-accent-greenStrong font-bold">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                  Gratuit
-                </span>
-                Plateforme d'analyse juridique
-              </div>
-
-              {/* Headline with liquid gradient text effect */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pt-24">
+            <div className="max-w-4xl lg:-ml-12">
+              {/* Titre typewriter + liquid gradient */}
               <div
                 ref={titleRef}
-                className="hero-animate relative inline-block"
+                className={`relative inline-block mb-8 ${showGradient ? '' : 'text-white'}`}
                 onMouseMove={handleTitleMouseMove}
-                style={{
+                style={showGradient ? {
                   '--x1': '0px',
                   '--y1': '0px',
                   '--x2': '0px',
                   '--y2': '0px',
                   '--x3': '0px',
                   '--y3': '0px',
-                } as React.CSSProperties}
+                  background: `
+                    radial-gradient(circle 220px at var(--x1) var(--y1), rgba(80, 217, 149, 0.55) 0%, transparent 100%),
+                    radial-gradient(circle 160px at var(--x2) var(--y2), rgba(38, 208, 124, 0.5) 0%, transparent 100%),
+                    radial-gradient(circle 100px at var(--x3) var(--y3), rgba(173, 179, 186, 0.45) 0%, transparent 100%),
+                    #ffffff
+                  `,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                } as React.CSSProperties : {}}
               >
-                <h1
-                  className="text-5xl md:text-6xl lg:text-[6rem] xl:text-[7rem] font-light tracking-tight leading-[1.15] max-w-6xl flex flex-col items-center gap-3 md:gap-6"
-                  style={{
-                    background: `
-                      radial-gradient(circle 220px at var(--x1) var(--y1), #50D995 0%, transparent 100%),
-                      radial-gradient(circle 160px at var(--x2) var(--y2), #26D07C 0%, transparent 100%),
-                      radial-gradient(circle 100px at var(--x3) var(--y3), #ADB3BA 0%, transparent 100%),
-                      #22324B
-                    `,
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    color: 'transparent',
-                  }}
-                >
-                  <span className="flex flex-wrap justify-center items-center gap-x-3 md:gap-x-4">
-                    Votre
-                    <span className="font-bold">crédit</span>
-                    <span>conso</span>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[1.1]">
+                  <span className="block">
+                    {"Votre crédit conso".split("").map((char, i) => (
+                      <span key={`l1-${i}`} className="hero-letter inline opacity-0">
+                        {char === " " ? "\u00A0" : char}
+                      </span>
+                    ))}
                   </span>
-                  <span className="flex flex-wrap justify-center items-center gap-x-3 md:gap-x-4">
-                    vous
-                    <span className="font-bold">pèse ?</span>
+                  <span className="block">
+                    {"vous pèse ?".split("").map((char, i) => (
+                      <span key={`l2-${i}`} className="hero-letter inline opacity-0">
+                        {char === " " ? "\u00A0" : char}
+                      </span>
+                    ))}
                   </span>
                 </h1>
               </div>
-
-              {/* Description */}
-              <p className="hero-animate text-base md:text-xl font-normal leading-relaxed text-text-body max-w-3xl">
-                Vous êtes à un clic de transformer votre situation. Vérifiez gratuitement en 2 minutes si votre dossier présente un levier d'action grâce à notre analyse intelligente.
+              <p className="hero-desc text-lg md:text-xl text-white/80 leading-relaxed max-w-xl">
+                Vous êtes à un clic de transformer votre situation. Vérifiez gratuitement en 2 minutes si votre dossier présente un levier d&apos;action grâce à notre analyse intelligente.
               </p>
-
-              {/* Buttons */}
-              <div className="hero-animate mt-4 flex flex-col sm:flex-row items-center justify-center gap-5">
-                <button
-                  onClick={() => setPhase("form")}
-                  className="px-8 py-4 rounded-full bg-accent-green text-text-primary font-bold shadow-lg shadow-accent-green/20 transition-all duration-300 hover:bg-accent-greenStrong hover:scale-105 hover:-translate-y-0.5"
-                >
-                  Tester mon éligibilité
-                </button>
-                <div className="px-8 py-4 rounded-full bg-white/20 backdrop-blur-sm text-text-primary font-bold shadow-none border border-white/30">
-                  100% gratuit · Sans engagement
-                </div>
-              </div>
-
             </div>
           </div>
         </section>
+        <SolutionSection onStartForm={() => setPhase("form")} />
         <div id="comment-ca-marche">
-          <HowItWorks />
+          <ProcessusDarkSection />
         </div>
       </>
     );
@@ -578,7 +444,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-      <HowItWorks />
     </>
   );
 }

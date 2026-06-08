@@ -51,7 +51,7 @@ export default function FAQSection() {
     <section ref={ref} className="py-16 md:py-24 bg-background-main">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-text-primary">
+          <h2 className="text-4xl md:text-5xl xl:text-6xl font-semibold tracking-tight text-text-primary">
             Questions fréquentes
           </h2>
         </div>

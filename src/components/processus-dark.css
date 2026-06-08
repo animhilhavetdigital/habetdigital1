@@ -1,0 +1,117 @@
+/* ─── Processus Dark Section — Animation Clip-Path ─── */
+
+.pd-card {
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.6s;
+}
+
+/* Overlay vert (accent-green) qui s’étend au hover */
+.pd-card::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  transition: clip-path 0.6s ease;
+  z-index: 0;
+  background-color: #50d995; /* accent-green */
+}
+
+.pd-card:hover {
+  box-shadow: 0.063rem 0.063rem 1.25rem 0.375rem rgb(0 0 0 / 53%);
+}
+
+/* ─── Position initiale du cercle par carte ─── */
+
+/* Card 1 — bottom-right */
+.pd-card:nth-child(1)::before {
+  bottom: 0;
+  right: 0;
+  clip-path: circle(calc(6.25rem + 7.5vw) at 100% 100%);
+}
+
+/* Card 2 — bottom-left */
+.pd-card:nth-child(2)::before {
+  bottom: 0;
+  left: 0;
+  clip-path: circle(calc(6.25rem + 7.5vw) at 0% 100%);
+}
+
+/* Card 3 — top-right */
+.pd-card:nth-child(3)::before {
+  top: 0;
+  right: 0;
+  clip-path: circle(calc(6.25rem + 7.5vw) at 100% 0%);
+}
+
+/* Card 4 — top-left */
+.pd-card:nth-child(4)::before {
+  top: 0;
+  left: 0;
+  clip-path: circle(calc(6.25rem + 7.5vw) at 0% 0%);
+}
+
+/* ─── Expansion au hover (SEULEMENT le fond vert, PAS l’image) ─── */
+.pd-card:hover::before {
+  clip-path: circle(110vw at 50% 50%);
+}
+
+/* ─── Texte qui passe au blanc ─── */
+.pd-card p,
+.pd-card h2 {
+  transition: color 0.8s;
+}
+
+.pd-card:hover p,
+.pd-card:hover h2 {
+  color: #ffffff;
+}
+
+/* ─── Cercles avec images (clip-path hover) ─── */
+.pd-circle {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@media screen and (min-width: 62.5rem) {
+  .pd-circle {
+    /* actif en desktop comme dans le code source */
+  }
+}
+
+/* Étape 1 — Test / Analyse en ligne */
+.pd-card:nth-child(1) .pd-circle {
+  background: url("https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80") no-repeat 50% 50% / cover;
+  bottom: 0;
+  right: 0;
+  clip-path: circle(calc(6.25rem + 7.5vw) at 100% 100%);
+}
+
+/* Étape 2 — Offre / Contrat juridique */
+.pd-card:nth-child(2) .pd-circle {
+  background: url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80") no-repeat 50% 50% / cover;
+  bottom: 0;
+  left: 0;
+  clip-path: circle(calc(6.25rem + 7.5vw) at 0% 100%);
+}
+
+/* Étape 3 — Paiement / Sécurisé */
+.pd-card:nth-child(3) .pd-circle {
+  background: url("https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80") no-repeat 50% 50% / cover;
+  top: 0;
+  right: 0;
+  clip-path: circle(calc(6.25rem + 7.5vw) at 100% 0%);
+}
+
+/* Étape 4 — Dossier activé / Accompagnement */
+.pd-card:nth-child(4) .pd-circle {
+  background: url("https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80") no-repeat 50% 50% / cover;
+  top: 0;
+  left: 0;
+  clip-path: circle(calc(6.25rem + 7.5vw) at 0% 0%);
+}
+
+/* L’image reste un petit cercle — seul le fond vert s’étend au hover */
