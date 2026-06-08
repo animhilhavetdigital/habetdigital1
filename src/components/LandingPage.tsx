@@ -129,9 +129,23 @@ export default function LandingPage() {
   // Chat State
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<{sender: "bot"|"user", text: string}[]>([]);
-  const [chatIndex, setChatIndex] = useState(0);
+  const [chatIndex, setChatIndex] = useState(-1); // -1 is for audio prompt
   const [chatInputValue, setChatInputValue] = useState("");
+  const [audioEnabled, setAudioEnabled] = useState<boolean | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
+
+  const speak = useCallback((text: string) => {
+    // Only speak if audio is enabled, or if it's the very first audio prompt
+    // Wait, the first prompt shouldn't speak automatically until they click. 
+    // Wait, they want it to speak only if they click "I want to listen".
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'fr-FR';
+      utterance.rate = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+  }, []);
 
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
@@ -213,9 +227,13 @@ export default function LandingPage() {
   const restart = useCallback(() => {
     setPhase("hero");
     setStepIndex(0);
-    setChatIndex(0);
+    setChatIndex(-1);
     setIsChatOpen(false);
     setChatMessages([]);
+    setAudioEnabled(null);
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
     setFormData({ montant: "", "nb_crédits": "1" });
     setScore(0);
     setIsSubmitting(false);
@@ -223,14 +241,41 @@ export default function LandingPage() {
 
   const startChat = useCallback(() => {
     setIsChatOpen(true);
-    setChatMessages([{ sender: "bot", text: CHAT_QUESTIONS[0].text }]);
-    setChatIndex(0);
+    setChatIndex(-1);
+    setAudioEnabled(null);
+    setChatMessages([
+      { sender: "bot", text: "Bienvenue ! Je serai votre guide pour ce test. Si vous souhaitez m'entendre parler, veuillez activer l'audio." }
+    ]);
     setChatInputValue("");
     setFormData({ "nb_crédits": "1" }); // Reset with defaults
   }, []);
 
+  const handleAudioChoice = useCallback((enable: boolean) => {
+    setAudioEnabled(enable);
+    setChatMessages(prev => [
+      ...prev,
+      { sender: "user", text: enable ? "Je veux écouter" : "Je préfère lire" }
+    ]);
+    
+    setTimeout(() => {
+      setChatMessages(prev => [
+        ...prev,
+        { sender: "bot", text: "Parfait. Commençons !" }
+      ]);
+      if (enable) speak("Parfait. Commençons ! " + CHAT_QUESTIONS[0].text);
+      
+      setTimeout(() => {
+        setChatMessages(prev => [
+          ...prev,
+          { sender: "bot", text: CHAT_QUESTIONS[0].text }
+        ]);
+        setChatIndex(0);
+      }, 1000);
+    }, 600);
+  }, [speak]);
+
   const handleChatAnswer = useCallback((val: string, displayVal: string) => {
-    if (!val.trim()) return;
+    if (!val.trim() || chatIndex === -1) return;
 
     const q = CHAT_QUESTIONS[chatIndex];
     const newFormData = { ...formData, [q.id]: val };
@@ -250,11 +295,15 @@ export default function LandingPage() {
           ...prev,
           { sender: "bot", text: CHAT_QUESTIONS[nextIndex].text }
         ]);
+        if (audioEnabled) speak(CHAT_QUESTIONS[nextIndex].text);
         setChatIndex(nextIndex);
       }, 600); // Small delay to feel natural
     } else {
       setTimeout(() => {
         setIsChatOpen(false);
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+        }
         setPhase("analysing");
         setTimeout(() => {
           const s = computeScore(newFormData);
@@ -379,34 +428,57 @@ export default function LandingPage() {
           <CTASection />
         </div>
 
-        {/* CHAT MODAL */}
+        {/* CHAT POPUP */}
         {isChatOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity">
-            <div className="bg-background-muted rounded-3xl w-full max-w-md h-[600px] max-h-[90vh] flex flex-col overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm transition-opacity">
+            
+            {/* POPUP CARD */}
+            <div className="relative w-full max-w-md h-[85vh] max-h-[700px] rounded-3xl overflow-hidden flex flex-col shadow-2xl border border-white/10 animate-in zoom-in-95 fade-in duration-300">
+              
               {/* Header */}
-              <div className="bg-gradient-to-r from-accent-slate to-surface-dark text-white p-4 flex items-center justify-between">
+              <div className="flex-none bg-accent-green px-5 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-accent-green flex items-center justify-center font-bold text-lg">
-                    D
+                  <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                   </div>
                   <div>
-                    <h3 className="font-bold text-base leading-tight">Assistant DroitHabitat</h3>
-                    <p className="text-xs text-white/80">Nous répondons instantanément</p>
+                    <h3 className="font-bold text-white text-base leading-tight">Assistant DroitHabitat</h3>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                      <p className="text-xs text-white/80">En ligne</p>
+                    </div>
                   </div>
                 </div>
-                <button onClick={() => setIsChatOpen(false)} className="text-white hover:opacity-75 transition-opacity p-2">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                </button>
+                <div className="flex items-center gap-2">
+                  {audioEnabled !== null && (
+                    <button 
+                      onClick={() => { setAudioEnabled(!audioEnabled); if (audioEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel(); }}
+                      className="text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-all"
+                    >
+                      {audioEnabled ? (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                      ) : (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                      )}
+                    </button>
+                  )}
+                  <button onClick={() => {
+                    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                    setIsChatOpen(false);
+                  }} className="text-white/80 hover:text-white p-2 rounded-full hover:bg-white/10 transition-all">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                  </button>
+                </div>
               </div>
 
               {/* Messages Area */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="flex-1 overflow-y-auto bg-surface-dark p-4 space-y-4" style={{ scrollbarWidth: 'thin' }}>
                 {chatMessages.map((msg, idx) => (
                   <div key={idx} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                    <div className={`max-w-[85%] px-4 py-3 text-sm leading-relaxed shadow-sm ${
+                    <div className={`max-w-[85%] px-4 py-3 text-sm leading-relaxed ${
                       msg.sender === "user" 
-                        ? "bg-accent-green text-text-primary rounded-2xl rounded-tr-sm font-medium" 
-                        : "bg-white text-text-primary border border-accent-slate/15 rounded-2xl rounded-tl-sm"
+                        ? "bg-accent-green text-white rounded-2xl rounded-tr-sm font-medium shadow-[0_2px_10px_rgba(38,208,124,0.3)]" 
+                        : "bg-white/10 text-white border border-white/10 rounded-2xl rounded-tl-sm"
                     }`}>
                       {msg.text}
                     </div>
@@ -416,34 +488,54 @@ export default function LandingPage() {
               </div>
 
               {/* Input Area */}
-              <div className="flex-none p-4 bg-white border-t border-accent-slate/15">
-                {CHAT_QUESTIONS[chatIndex]?.type === "number" && (
+              <div className="flex-none bg-surface-dark border-t border-white/10 p-4">
+                
+                {chatIndex === -1 && (
+                  <div className="flex gap-3 justify-center">
+                    <button
+                      onClick={() => handleAudioChoice(true)}
+                      className="flex-1 px-4 py-3 rounded-xl bg-accent-green text-white font-bold hover:bg-accent-greenStrong transition-all shadow-md flex justify-center items-center gap-2 text-sm"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                      Écouter
+                    </button>
+                    <button
+                      onClick={() => handleAudioChoice(false)}
+                      className="flex-1 px-4 py-3 rounded-xl border border-white/20 bg-white/5 text-white font-bold hover:bg-white/10 transition-all flex justify-center items-center gap-2 text-sm"
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                      Lire
+                    </button>
+                  </div>
+                )}
+
+                {chatIndex >= 0 && CHAT_QUESTIONS[chatIndex]?.type === "number" && (
                   <form onSubmit={handleChatSubmitNumber} className="flex gap-2">
                     <input
                       type="number"
                       value={chatInputValue}
                       onChange={(e) => setChatInputValue(e.target.value)}
                       placeholder={CHAT_QUESTIONS[chatIndex].placeholder || "Votre réponse..."}
-                      className="flex-1 bg-background-muted rounded-full px-4 py-3 text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-accent-green/50 transition-all"
+                      className="flex-1 bg-white/10 border border-white/15 rounded-xl px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-accent-green/50 transition-all text-sm"
                       autoFocus
                     />
                     <button
                       type="submit"
                       disabled={!chatInputValue}
-                      className="w-11 h-11 rounded-full bg-accent-green text-white flex items-center justify-center shadow-md shadow-accent-green/20 disabled:opacity-50 transition-all hover:bg-accent-greenStrong"
+                      className="w-11 h-11 rounded-xl bg-accent-green text-white flex items-center justify-center shadow-[0_0_15px_rgba(38,208,124,0.3)] disabled:opacity-50 transition-all hover:bg-accent-greenStrong"
                     >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
                     </button>
                   </form>
                 )}
 
-                {CHAT_QUESTIONS[chatIndex]?.type === "select" && (
+                {chatIndex >= 0 && CHAT_QUESTIONS[chatIndex]?.type === "select" && (
                   <div className="flex flex-wrap gap-2 justify-center">
                     {CHAT_QUESTIONS[chatIndex].options?.map((opt, i) => (
                       <button
                         key={i}
                         onClick={() => handleChatAnswer(CHAT_QUESTIONS[chatIndex].values![i], opt)}
-                        className="px-4 py-2 rounded-full border border-accent-slate/20 text-sm text-text-primary font-medium hover:border-accent-green hover:bg-accent-green/10 hover:text-accent-greenStrong transition-all"
+                        className="px-4 py-2.5 rounded-xl border border-white/15 bg-white/5 text-white font-medium hover:border-accent-green hover:bg-accent-green/15 hover:text-accent-green transition-all text-sm"
                       >
                         {opt}
                       </button>
@@ -451,28 +543,28 @@ export default function LandingPage() {
                   </div>
                 )}
 
-                {CHAT_QUESTIONS[chatIndex]?.type === "boolean" && (
+                {chatIndex >= 0 && CHAT_QUESTIONS[chatIndex]?.type === "boolean" && (
                   <div className="flex gap-3 justify-center">
                     <button
                       onClick={() => handleChatAnswer("oui", "Oui")}
-                      className="flex-1 max-w-[120px] px-4 py-2.5 rounded-full border border-accent-slate/20 text-sm text-text-primary font-medium hover:border-accent-green hover:bg-accent-green/10 hover:text-accent-greenStrong transition-all text-center"
+                      className="flex-1 px-5 py-3 rounded-xl border border-white/15 bg-white/5 text-white font-bold hover:border-accent-green hover:bg-accent-green/15 hover:text-accent-green transition-all text-center text-sm"
                     >
                       Oui
                     </button>
                     <button
                       onClick={() => handleChatAnswer("non", "Non")}
-                      className="flex-1 max-w-[120px] px-4 py-2.5 rounded-full border border-accent-slate/20 text-sm text-text-primary font-medium hover:border-accent-green hover:bg-accent-green/10 hover:text-accent-greenStrong transition-all text-center"
+                      className="flex-1 px-5 py-3 rounded-xl border border-white/15 bg-white/5 text-white font-bold hover:border-accent-redMuted hover:bg-accent-redMuted/15 hover:text-accent-redMuted transition-all text-center text-sm"
                     >
                       Non
                     </button>
                   </div>
                 )}
 
-                {!CHAT_QUESTIONS[chatIndex] && (
-                  <div className="flex gap-2 items-center justify-center py-2 text-text-body">
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent-green animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent-green animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <div className="w-1.5 h-1.5 rounded-full bg-accent-green animate-bounce" style={{ animationDelay: "300ms" }} />
+                {chatIndex >= 0 && !CHAT_QUESTIONS[chatIndex] && (
+                  <div className="flex gap-2 items-center justify-center py-3 text-white">
+                    <div className="w-2 h-2 rounded-full bg-accent-green animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <div className="w-2 h-2 rounded-full bg-accent-green animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <div className="w-2 h-2 rounded-full bg-accent-green animate-bounce" style={{ animationDelay: "300ms" }} />
                   </div>
                 )}
               </div>
