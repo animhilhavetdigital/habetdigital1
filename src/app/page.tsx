@@ -11,13 +11,17 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="relative">
         <LandingPage />
-        <TestimonialsSection />
-        <FAQSection />
-        <CTASection />
+        <div className="relative z-10">
+          <TestimonialsSection />
+          <FAQSection />
+          <CTASection />
+        </div>
       </main>
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
     </>
   );
 }

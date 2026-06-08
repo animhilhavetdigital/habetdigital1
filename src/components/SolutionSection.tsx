@@ -20,44 +20,58 @@ export default function SolutionSection({ onStartForm }: SolutionSectionProps) {
             Notre test gratuit analyse instantanément votre dossier et vous dit si vous pouvez récupérer vos droits. Gratuit, sans engagement, 100% en ligne.
           </p>
 
-          {/* Boutons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* Boutons et Flèches */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-6">
+            
+            {/* Flèche gauche */}
+            <div className="hidden sm:flex animate-bounce-x-right">
+              <svg className="w-8 h-8 text-accent-greenStrong" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </div>
+
             {onStartForm ? (
               <button
                 onClick={onStartForm}
-                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-accent-green text-text-primary font-bold shadow-lg shadow-accent-green/20 transition-all duration-300 hover:bg-accent-greenStrong hover:scale-105 hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center px-10 py-5 text-lg md:text-xl rounded-full bg-accent-green text-text-primary font-extrabold shadow-xl shadow-accent-green/30 transition-all duration-300 hover:bg-accent-greenStrong hover:scale-110 hover:-translate-y-1"
               >
                 Tester mon éligibilité
-                <svg className="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="ml-3 w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </button>
             ) : (
               <Link
                 href="/onboarding"
-                className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-accent-green text-text-primary font-bold shadow-lg shadow-accent-green/20 transition-all duration-300 hover:bg-accent-greenStrong hover:scale-105 hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center px-10 py-5 text-lg md:text-xl rounded-full bg-accent-green text-text-primary font-extrabold shadow-xl shadow-accent-green/30 transition-all duration-300 hover:bg-accent-greenStrong hover:scale-110 hover:-translate-y-1"
               >
                 Tester mon éligibilité
-                <svg className="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="ml-3 w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </Link>
             )}
 
+            {/* Flèche droite */}
+            <div className="hidden sm:flex animate-bounce-x-left">
+              <svg className="w-8 h-8 text-accent-greenStrong" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </div>
+
           </div>
         </div>
+      </div>
 
-        {/* Image */}
-        <div className="relative max-w-[90vw] mx-auto">
-          <div className="rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(34,50,75,0.12)]">
-            <img
-              src="/photo/Gemini_Generated_Image_6z87n86z87n86z87.png"
-              alt="Solution Droit Habitat"
-              className="w-full h-auto object-cover"
-            />
-          </div>
+      {/* Image élargie */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 mt-4 md:mt-8">
+        <div className="rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(34,50,75,0.12)]">
+          <img
+            src="/photo/Gemini_Generated_Image_6z87n86z87n86z87.png"
+            alt="Solution Droit Habitat"
+            className="w-full h-auto object-cover"
+          />
         </div>
-
       </div>
     </section>
   );

@@ -32,8 +32,7 @@ const STEPS = [
 export default function ProcessusDarkSection() {
   return (
     <section
-      className="min-h-screen text-center py-20 px-8 xl:px-0 flex flex-col justify-center font-[family-name:var(--font-raleway)]"
-      style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #E2F9EE 100%)' }}
+      className="min-h-screen text-center py-20 px-8 xl:px-0 flex flex-col justify-center font-[family-name:var(--font-raleway)] bg-[#50D995]"
     >
       {/* Sous-titre */}
       <span className="text-text-body text-lg max-w-lg mx-auto mb-2 capitalize flex items-center justify-center">
