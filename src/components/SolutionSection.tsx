@@ -5,9 +5,10 @@ import Link from "next/link";
 interface SolutionSectionProps {
   onStartForm?: () => void;
   onStartChat?: () => void;
+  children?: React.ReactNode;
 }
 
-export default function SolutionSection({ onStartForm, onStartChat }: SolutionSectionProps) {
+export default function SolutionSection({ onStartForm, onStartChat, children }: SolutionSectionProps) {
   return (
     <section className="py-24 md:py-32 bg-background-main relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -76,6 +77,7 @@ export default function SolutionSection({ onStartForm, onStartChat }: SolutionSe
 
           </div>
         </div>
+        {children}
       </div>
 
       {/* Image élargie */}
