@@ -239,7 +239,7 @@ export default function LandingPage() {
               alt="Droit Habitat"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#22324B]/75 via-[#22324B]/60 to-[#22324B]/20" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#22324B]/90 via-[#22324B]/70 to-[#22324B]/35 md:bg-gradient-to-r md:from-[#22324B]/75 md:via-[#22324B]/60 md:to-[#22324B]/20" />
           </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pt-24">

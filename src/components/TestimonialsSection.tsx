@@ -162,10 +162,10 @@ export default function TestimonialsSection() {
               <div className="flex gap-6 w-full h-fit">
               
               {/* Column 1 (Moves UP) */}
-              <div ref={column1Ref} className="flex-1 w-1/2">
+              <div ref={column1Ref} className="flex-1 w-full sm:w-1/2">
                 {col1Items.map((t, i) => (
                   <div key={`col1-${i}`} className="pb-6">
-                    <div className={`w-full rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] p-8 flex flex-col transition-all duration-300 hover:bg-white/80 hover:shadow-md ${t.size === 'lg' ? 'min-h-[420px]' : t.size === 'md' ? 'min-h-[340px]' : 'min-h-[280px]'}`}>
+                    <div className={`w-full rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] p-6 sm:p-8 flex flex-col transition-all duration-300 hover:bg-white/80 hover:shadow-md ${t.size === 'lg' ? 'min-h-[420px]' : t.size === 'md' ? 'min-h-[340px]' : 'min-h-[280px]'}`}>
                       <div className="mb-6">
                         <span className="text-xs font-bold text-text-primary uppercase tracking-widest">{t.company}</span>
                       </div>
@@ -185,10 +185,10 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Column 2 (Moves DOWN) */}
-              <div ref={column2Ref} className="flex-1 w-1/2">
+              <div ref={column2Ref} className="flex-1 hidden sm:block sm:w-1/2">
                 {col2Items.map((t, i) => (
                   <div key={`col2-${i}`} className="pb-6">
-                    <div className={`w-full rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] p-8 flex flex-col transition-all duration-300 hover:bg-white/80 hover:shadow-md ${t.size === 'lg' ? 'min-h-[420px]' : t.size === 'md' ? 'min-h-[340px]' : 'min-h-[280px]'}`}>
+                    <div className={`w-full rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgba(34,50,75,0.04)] p-6 sm:p-8 flex flex-col transition-all duration-300 hover:bg-white/80 hover:shadow-md ${t.size === 'lg' ? 'min-h-[420px]' : t.size === 'md' ? 'min-h-[340px]' : 'min-h-[280px]'}`}>
                       <div className="mb-6">
                         <span className="text-xs font-bold text-text-primary uppercase tracking-widest">{t.company}</span>
                       </div>
